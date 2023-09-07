@@ -8,17 +8,32 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import data from "./dailyBonusData";
 import { Box, List, ListItem, Modal, Typography } from "@mui/material";
+import EditDailySpinWheel from "../../Model/EditDailySpinWheel.component";
 
 const modelStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '60%',
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "60%",
+  maxHeight:'70vh',
+  bgcolor: "background.paper",
+  borderRadius:'10px',
   boxShadow: 24,
   p: 4,
+  outline:'none'
+};
+
+const scrollbarStyle = {
+  "&::-webkit-scrollbar": {
+    width: "1px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "#fff",
+  },
+  "&::-webkit-scrollbar-thumb:hover": {
+    backgroundColor: "#fff",
+  },
 };
 
 export default function DailySpinBonusTable() {
@@ -27,8 +42,8 @@ export default function DailySpinBonusTable() {
   const handleClose = () => setOpen(false);
 
   return (
-    <TableContainer sx={{ height:'77vh'}}>
-      <Table sx={{ minWidth: 650, }} aria-label="simple table">
+    <TableContainer sx={{ height: "77vh", ...scrollbarStyle }}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Day Name</TableCell>
@@ -77,15 +92,9 @@ export default function DailySpinBonusTable() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modelStyle}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <EditDailySpinWheel />
         </Box>
       </Modal>
-
     </TableContainer>
   );
 }

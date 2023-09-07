@@ -16,6 +16,7 @@ const DailySpinBonus = () => {
             height: "auto",
             padding:3
           },
+          zIndex:'0'
         }}
       >
         <Paper
