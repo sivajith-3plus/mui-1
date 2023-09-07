@@ -18,9 +18,14 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useStyles from "./SideNavStyles";
+import { useNavigate } from "react-router-dom";
 
 const SideNav = () => {
-  const classes = useStyles()
+  const navigate = useNavigate();
+  const handleRoute = (props) => {
+    navigate(props.route);
+  };
+  const classes = useStyles();
   return (
     <>
       <Stack
@@ -29,7 +34,7 @@ const SideNav = () => {
           bgcolor: "#1e1e1e",
           height: "100svh",
           color: "white",
-          overflow: "hidden",
+          overflow: "hidden"
         }}
       >
         <img
@@ -37,13 +42,18 @@ const SideNav = () => {
           alt="Your Image"
           style={{ maxWidth: "100%", paddingTop: 12 }}
         />
-        <List sx={{paddingLeft:2}}>
+        <List sx={{ paddingLeft: 2 }}>
           {sideNavItems.map((item, index) => {
             return (
               <ListItem key={index} disablePadding>
                 <ListItemIcon sx={{ color: "white" }}>{item.icon}</ListItemIcon>
                 <Accordion
-                  sx={{ bgcolor: "#1e1e1e", color: "white", width: "90%",boxShadow: "none" }}
+                  sx={{
+                    bgcolor: "#1e1e1e",
+                    color: "white",
+                    width: "90%",
+                    boxShadow: "none",
+                  }}
                 >
                   <AccordionSummary
                     expandIcon={
@@ -56,11 +66,18 @@ const SideNav = () => {
                   >
                     <Typography>{item.name}</Typography>
                   </AccordionSummary>
-                 {item.children && <AccordionDetails>
-                    {item.children?.map((itemChild, childIndex) => (
-                      <ListItemButton key={childIndex}>{itemChild}</ListItemButton>
-                    ))}
-                  </AccordionDetails>}
+                  {item.children && (
+                    <AccordionDetails>
+                      {item.children?.map((itemChild, childIndex) => (
+                        <ListItemButton
+                          key={childIndex}
+                          onClick={() => handleRoute(itemChild)}
+                        >
+                          {itemChild.name}
+                        </ListItemButton>
+                      ))}
+                    </AccordionDetails>
+                  )}
                 </Accordion>
               </ListItem>
             );

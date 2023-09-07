@@ -5,6 +5,9 @@ import "@fontsource/roboto/700.css";
 import SideNav from "./Components/SideNav/SideNav";
 import NavBar from "./Components/NavBar/NavBar";
 import { Box } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
+import Home from "./Components/Home/Home";
+import DailyBonus from "./Components/DailyBonus/DailyBonus.page";
 
 function App() {
   return (
@@ -13,7 +16,10 @@ function App() {
         <SideNav />
         <Box sx={{ width: 1 }}>
           <NavBar />
-          HIIIII
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/daily-spin-bonus" element={<DailyBonus />} />
+          </Routes>
         </Box>
       </Box>
     </>
