@@ -1,9 +1,20 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import api from "../../Api";
+import { useDispatch, useSelector } from "react-redux";
+import { setDailyBonusCount } from "../../Redux/features/dailyBonusCountSlice";
 
 const EditDailySpinCount = () => {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
+  const dailyBonusCount = useSelector((state) => state.dailyBonusCount.data);
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
+    api.editBonusCount(dailyBonusCount._id,value).then((response)=>{
+        dispatch(setDailyBonusCount(response.data))
+    })
+  }
 
   const handleChange = (event) => {
     const inputValue = event.target.value;
@@ -36,7 +47,7 @@ const EditDailySpinCount = () => {
           variant="contained"
           color="primary"
           disabled={error}
-          onClick={() => alert(`You entered: ${value}`)}
+          onClick={handleSubmit}
         >
           Submit
         </Button>
