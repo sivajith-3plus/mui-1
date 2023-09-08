@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Modal,
   Table,
   TableBody,
@@ -9,9 +10,12 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import data from "./DailySpinBonusTypeTableData";
 import EditDailySpinBonusType from "../../Model/EditDailySpinBonusType";
+import api from "../../../Api";
+import { useDispatch, useSelector } from "react-redux";
+import { setDailyBonusType } from "../../../Redux/features/DailyBonusType/dailyBonusTypeSlice";
 
 const modelStyle = {
   position: "absolute",
@@ -31,12 +35,23 @@ const DailySpinBonusTypeTable = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const dailyBonusType = useSelector((state) => state.dailyBonusType.data);
+  console.log('data',dailyBonusType);
+
+
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    api.getAllBonusType().then((response)=>{
+        dispatch(setDailyBonusType(response.data))
+    })
+  },[])
 
   return (
     <>
       <TableContainer sx={{}}>
-        <Typography variant="h6" fontWeight="fontWeightBold">
-          Daily Spin Bonus Type
+        <Typography variant="h6" fontWeight="fontWeightBold" sx={{display:'flex',justifyContent:'space-between'}}>
+          <div>Daily Spin Bonus Type</div><Button variant="contained">add</Button>
         </Typography>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -50,7 +65,7 @@ const DailySpinBonusTypeTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((obj) => (
+            {dailyBonusType.map((obj) => (
               <TableRow
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
@@ -93,7 +108,7 @@ const DailySpinBonusTypeTable = () => {
                     <span style={{ color: "blue" }}>more</span>
                   </div>
                 </TableCell>
-                <TableCell align="left">{obj.deductTDS}</TableCell>
+                <TableCell align="left">{obj.deductTds}</TableCell>
                 <TableCell align="right">
                   <span
                     style={{ color: "blue", cursor: "pointer" }}

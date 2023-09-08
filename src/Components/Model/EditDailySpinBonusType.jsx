@@ -15,7 +15,6 @@ const EditDailySpinBonusType = () => {
           id="demo-simple-select"
           value="Day 1"
           label="day"
-          disabled
         >
           <MenuItem value="Day 1">Deposit Cash</MenuItem>
         </Select>
@@ -28,6 +27,14 @@ const EditDailySpinBonusType = () => {
           inputProps={{ maxLength: 20 }}
         />
         <p>Description*</p>
+        <TextField
+          hiddenLabel
+          id="outlined-basic"
+          sx={{ width: "100%" }}
+          variant="outlined"
+          inputProps={{ maxLength: 100 }}
+        />
+        <p>Image url*</p>
         <TextField
           hiddenLabel
           id="outlined-basic"

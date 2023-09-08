@@ -2,7 +2,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import api from "../../Api";
 import { useDispatch, useSelector } from "react-redux";
-import { setDailyBonusCount } from "../../Redux/features/dailyBonusCountSlice";
+import { setDailyBonusCount } from "../../Redux/features/DailyBonusCount/dailyBonusCountSlice";
 
 const EditDailySpinCount = () => {
   const [value, setValue] = useState("");

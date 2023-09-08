@@ -14,7 +14,7 @@ import React, { useEffect } from "react";
 import DailySpinBonusTypeTable from "../Table/DailySpinBonusTypeTable/DailySpinBonusTypeTable";
 import api from "../../Api";
 import { useDispatch, useSelector } from "react-redux";
-import { setDailyBonusCount } from "../../Redux/features/dailyBonusCountSlice";
+import { setDailyBonusCount } from "../../Redux/features/DailyBonusCount/dailyBonusCountSlice";
 import EditDailySpinCount from "../Model/EditDailySpinCount";
 const modelStyle = {
   position: "absolute",
