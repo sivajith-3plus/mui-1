@@ -8,6 +8,11 @@ import { Box } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Components/Home/Home";
 import DailyBonus from "./Components/DailyBonus/DailyBonus.page";
+import axios from "axios";
+
+// axios settings
+axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.params = {};
 
 function App() {
   return (

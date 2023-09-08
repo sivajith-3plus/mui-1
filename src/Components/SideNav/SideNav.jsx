@@ -20,6 +20,18 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useStyles from "./SideNavStyles";
 import { useNavigate } from "react-router-dom";
 
+const scrollbarStyle = {
+  "&::-webkit-scrollbar": {
+    width: "5px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "#555",
+  },
+  "&::-webkit-scrollbar-thumb:hover": {
+    backgroundColor: "#555",
+  },
+};
+
 const SideNav = () => {
   const navigate = useNavigate();
   const handleRoute = (props) => {
@@ -34,7 +46,6 @@ const SideNav = () => {
           bgcolor: "#1e1e1e",
           height: "100svh",
           color: "white",
-          overflow: "hidden"
         }}
       >
         <img
@@ -42,7 +53,7 @@ const SideNav = () => {
           alt="Your Image"
           style={{ maxWidth: "100%", paddingTop: 12 }}
         />
-        <List sx={{ paddingLeft: 2 }}>
+        <List sx={{ paddingLeft: 2,overflowY:'scroll', ...scrollbarStyle }}>
           {sideNavItems.map((item, index) => {
             return (
               <ListItem key={index} disablePadding>

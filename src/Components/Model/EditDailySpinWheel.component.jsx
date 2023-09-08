@@ -80,6 +80,22 @@ const EditDailySpinWheel = () => {
               <MenuItem value="Bonus Cash">Bonus Cash</MenuItem>
             </Select>
           </div>
+          <div>
+            <Typography
+              variant="body1"
+              style={{ fontWeight: "bold", marginTop: 8 }}
+            >
+              Divsion 1*
+            </Typography>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value="Bonus Cash"
+              label="day"
+            >
+              <MenuItem value="Bonus Cash">Bonus Cash</MenuItem>
+            </Select>
+          </div>
         </Box>
       </Box>
     </>
