@@ -18,8 +18,23 @@ const EditDailySpinWheel = ({ dayToEdit }) => {
   const [title, setTitle] = useState(dayToEdit.title);
   const [description, setDEscription] = useState(dayToEdit.description);
   const [divisions, setDivisions] = useState(dayToEdit.division);
+  const [selectedDivision, setSelectedDivision] = useState([]);
 
-  console.log("div", divisions);
+  const handleTypeChange = (e, i) => {
+    const selectedDivs = selectedDivision;
+    const isSelected = selectedDivs.some((div) => div.id === i);
+    if (!isSelected) {
+      selectedDivs.push({id:i,type:e.target.value})
+      setSelectedDivision(selectedDivs)
+    }
+    // else{
+    //   selectedDivs.map((divs)=>{
+    //     if(divs.id)
+    //   })
+    // }
+    console.log(selectedDivs);
+  };
+
   const divReps = [];
   for (let i = 1; i <= dailyBonusCount.count; i++) {
     divReps.push(i);
@@ -81,6 +96,9 @@ const EditDailySpinWheel = ({ dayToEdit }) => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label="day"
+                    onChange={(e) => {
+                      handleTypeChange(e, i);
+                    }}
                   >
                     {dailyBonusType.map((type) => (
                       <MenuItem value={type.title}>{type.title}</MenuItem>
@@ -98,6 +116,42 @@ const EditDailySpinWheel = ({ dayToEdit }) => {
                     variant="outlined"
                     inputProps={{ maxLength: 100 }}
                   />
+                </Box>
+              </Stack>
+              <Stack direction="row" sx={{ width: "100%" }} spacing={2}>
+                <Box sx={{ width: "100%" }}>
+                  <Typography
+                    variant="body1"
+                    style={{ fontWeight: "bold", marginTop: 8 }}
+                  >
+                    Referral Boosters (ex 2x, 3x)
+                  </Typography>
+                  <Select
+                    sx={{ width: "100%" }}
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="day"
+                    onChange={(e) => {}}
+                  >
+                    <MenuItem value="2x">2x</MenuItem>
+                  </Select>
+                </Box>
+                <Box sx={{ width: "100%" }}>
+                  <Typography
+                    variant="body1"
+                    style={{ fontWeight: "bold", marginTop: 8 }}
+                  >
+                    Expires at *
+                  </Typography>
+                  <Select
+                    sx={{ width: "100%" }}
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="day"
+                    onChange={(e) => {}}
+                  >
+                    <MenuItem value="2">2 hour</MenuItem>
+                  </Select>
                 </Box>
               </Stack>
             </Stack>
