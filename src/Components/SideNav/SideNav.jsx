@@ -46,6 +46,7 @@ const SideNav = () => {
           bgcolor: "#1e1e1e",
           height: "100svh",
           color: "white",
+          position:'fixed'
         }}
       >
         <img

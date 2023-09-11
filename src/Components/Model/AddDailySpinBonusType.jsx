@@ -11,18 +11,14 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import api from "../../Api";
-import { useDispatch } from "react-redux";
-import { setDailyBonusType } from "../../Redux/features/DailyBonusType/dailyBonusTypeSlice";
 
-const EditDailySpinBonusType = ({ editEle,handleClose }) => {
-  const [iconUrl, setIconUrl] = useState(editEle.typeIcon);
-  const [type, setType] = useState(editEle.type);
-  const [title, setTitle] = useState(editEle.title);
-  const [description, setDescription] = useState(editEle.description);
-  const [deductTds, setDeductTds] = useState(editEle.deductTds);
-  const [error, setError] = useState();
-
-  const dispatch = useDispatch()
+const AddDailySpinBonusType = ({handleClose}) => {
+  const [iconUrl, setIconUrl] = useState("");
+  const [type, setType] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [deductTds, setDeductTds] = useState();
+  const [error,setError] = useState()
 
   const handleSubmit = () => {
     if(!iconUrl || !type || !title || !description || !deductTds){
@@ -36,20 +32,16 @@ const EditDailySpinBonusType = ({ editEle,handleClose }) => {
         description:description,
         deductTds:deductTds
       }
-      api.editBonusType(editEle._id,data)
-      api.getAllBonusType().then((response) => {
-        dispatch(setDailyBonusType(response.data));
-      });
+      api.addBonusType(data)
       handleClose()
     }
   }
 
-
   return (
     <>
-      <Box sx={{ color: "black" }}>
+      <Box sx={{ color: "black", height: "auto"}}>
         <Typography align="center" variant="h6">
-          Update Daily Spin Bonus
+          ADD Daily Spin Bonus
         </Typography>
         <Typography>Type *</Typography>
         <TextField
@@ -58,7 +50,6 @@ const EditDailySpinBonusType = ({ editEle,handleClose }) => {
           sx={{ width: "100%" }}
           variant="outlined"
           inputProps={{ maxLength: 20 }}
-          value={type}
           onChange={(e) => setType(e.target.value)}
         />
         <Typography>Title*</Typography>
@@ -68,7 +59,6 @@ const EditDailySpinBonusType = ({ editEle,handleClose }) => {
           sx={{ width: "100%" }}
           variant="outlined"
           inputProps={{ maxLength: 20 }}
-          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <Typography>Description*</Typography>
@@ -78,7 +68,6 @@ const EditDailySpinBonusType = ({ editEle,handleClose }) => {
           sx={{ width: "100%" }}
           variant="outlined"
           inputProps={{ maxLength: 100 }}
-          value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
         <Typography>Image url*</Typography>
@@ -87,8 +76,6 @@ const EditDailySpinBonusType = ({ editEle,handleClose }) => {
           id="outlined-basic"
           sx={{ width: "100%" }}
           variant="outlined"
-          inputProps={{ maxLength: 100 }}
-          value={iconUrl}
           onChange={(e) => setIconUrl(e.target.value)}
         />
         <Typography>Is Deduct TDS?*</Typography>
@@ -112,4 +99,4 @@ const EditDailySpinBonusType = ({ editEle,handleClose }) => {
   );
 };
 
-export default EditDailySpinBonusType;
+export default AddDailySpinBonusType;

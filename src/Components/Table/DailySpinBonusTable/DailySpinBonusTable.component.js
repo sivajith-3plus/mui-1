@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import data from "./dailyBonusData";
 import { Box, List, ListItem, Modal, Typography } from "@mui/material";
 import EditDailySpinWheel from "../../Model/EditDailySpinWheel.component";
+import { useSelector } from "react-redux";
 
 const modelStyle = {
   position: "absolute",
@@ -16,33 +17,26 @@ const modelStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "60%",
-  maxHeight:'70vh',
+  maxHeight: "70vh",
   bgcolor: "background.paper",
-  borderRadius:'10px',
+  borderRadius: "10px",
   boxShadow: 24,
   p: 4,
-  outline:'none'
-};
-
-const scrollbarStyle = {
-  "&::-webkit-scrollbar": {
-    width: "1px",
-  },
-  "&::-webkit-scrollbar-thumb": {
-    backgroundColor: "#fff",
-  },
-  "&::-webkit-scrollbar-thumb:hover": {
-    backgroundColor: "#fff",
-  },
+  outline: "none",
 };
 
 export default function DailySpinBonusTable() {
   const [open, setOpen] = React.useState(false);
+  const [dayToEdit, setDayToEdit] = React.useState();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const dailyBonusData = useSelector((state) => state.dailySpinBonus.data);
+
+  console.log("bonus data", dailyBonusData);
+
   return (
-    <TableContainer sx={{ height: "77vh", ...scrollbarStyle }}>
+    <TableContainer sx={{}}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -54,7 +48,7 @@ export default function DailySpinBonusTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((obj, i) => (
+          {dailyBonusData.map((obj, i) => (
             <TableRow
               key={i}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -66,10 +60,10 @@ export default function DailySpinBonusTable() {
               <TableCell align="left">{obj.description}</TableCell>
               <TableCell align="left">
                 <List sx={{ listStyleType: "disc", pl: 4 }}>
-                  {obj.divisions.map((division, j) => (
+                  {obj.division.map((div, j) => (
                     <ListItem key={j} sx={{ display: "list-item" }}>
-                      {division.id} bonus cash : {division["bonus cash"]},
-                      Deduct TDS: {division["deduct tds"]}
+                      division {j + 1} {div.divisionName}: {div.cash? div.cash+'rs' : div.referalBooster+'x'} , Deduct
+                      TDS: {div.dedcutTds}
                     </ListItem>
                   ))}
                 </List>
@@ -77,7 +71,10 @@ export default function DailySpinBonusTable() {
               <TableCell
                 align="right"
                 sx={{ color: "blue", cursor: "pointer" }}
-                onClick={handleOpen}
+                onClick={() => {
+                  handleOpen();
+                  setDayToEdit(obj);
+                }}
               >
                 Edit
               </TableCell>
@@ -92,7 +89,7 @@ export default function DailySpinBonusTable() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modelStyle}>
-          <EditDailySpinWheel />
+          <EditDailySpinWheel dayToEdit={dayToEdit}/>
         </Box>
       </Modal>
     </TableContainer>

@@ -10,12 +10,13 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import data from "./DailySpinBonusTypeTableData";
 import EditDailySpinBonusType from "../../Model/EditDailySpinBonusType";
 import api from "../../../Api";
 import { useDispatch, useSelector } from "react-redux";
 import { setDailyBonusType } from "../../../Redux/features/DailyBonusType/dailyBonusTypeSlice";
+import AddDailySpinBonusType from "../../Model/AddDailySpinBonusType";
 
 const modelStyle = {
   position: "absolute",
@@ -32,26 +33,43 @@ const modelStyle = {
 };
 
 const DailySpinBonusTypeTable = () => {
+  const dailyBonusCount = useSelector((state) => state.dailyBonusCount.data);
+
   const [open, setOpen] = React.useState(false);
+  const [isAdd, setIsAdd] = useState(false);
+  const [editEle, setEditEle] = useState("");
+
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setIsAdd(false);
+  };
+  const handleAdd = () => {
+    setOpen(true);
+    setIsAdd(true);
+  };
   const dailyBonusType = useSelector((state) => state.dailyBonusType.data);
-  console.log('data',dailyBonusType);
 
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
-
-  useEffect(()=>{
-    api.getAllBonusType().then((response)=>{
-        dispatch(setDailyBonusType(response.data))
-    })
-  },[])
+  useEffect(() => {
+    api.getAllBonusType().then((response) => {
+      dispatch(setDailyBonusType(response.data));
+    });
+  }, [open]);
 
   return (
     <>
       <TableContainer sx={{}}>
-        <Typography variant="h6" fontWeight="fontWeightBold" sx={{display:'flex',justifyContent:'space-between'}}>
-          <div>Daily Spin Bonus Type</div><Button variant="contained">add</Button>
+        <Typography
+          variant="h6"
+          fontWeight="fontWeightBold"
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <div>Daily Spin Bonus Type</div>
+          <Button variant="contained" onClick={handleAdd}>
+            add
+          </Button>
         </Typography>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -112,7 +130,11 @@ const DailySpinBonusTypeTable = () => {
                 <TableCell align="right">
                   <span
                     style={{ color: "blue", cursor: "pointer" }}
-                    onClick={handleOpen}
+                    onClick={() => {
+                      setEditEle(obj);
+                      handleOpen();
+                      console.log('edit',editEle);
+                    }}
                   >
                     edit
                   </span>
@@ -129,7 +151,11 @@ const DailySpinBonusTypeTable = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modelStyle}>
-          <EditDailySpinBonusType/>
+          {isAdd ? (
+            <AddDailySpinBonusType handleClose={handleClose} />
+          ) : (
+            <EditDailySpinBonusType editEle={editEle} handleClose={handleClose}/>
+          )}
         </Box>
       </Modal>
     </>

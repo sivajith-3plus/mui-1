@@ -11,7 +11,7 @@ import DailyBonus from "./Components/DailyBonus/DailyBonus.page";
 import axios from "axios";
 
 // axios settings
-axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = "http://localhost:5000";
 axios.defaults.params = {};
 
 function App() {
@@ -19,8 +19,8 @@ function App() {
     <>
       <Box sx={{ display: "flex" }}>
         <SideNav />
-        <Box sx={{ width: 1 }}>
-          <NavBar />
+        <NavBar />
+        <Box sx={{ width: 1, position:"absolute", top: 64, right: 0,  width:'calc(100% - 300px)',zIndex:0}}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/daily-spin-bonus" element={<DailyBonus />} />

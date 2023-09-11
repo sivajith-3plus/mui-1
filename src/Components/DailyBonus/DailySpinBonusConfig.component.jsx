@@ -36,7 +36,7 @@ const DailySpinBonusConfig = () => {
 
   const dailyBonusCount = useSelector((state) => state.dailyBonusCount.data);
   const dispatch = useDispatch();
-
+  console.log(dailyBonusCount);
   useEffect(() => {
     api.getBonusCount().then((response) => {
       dispatch(setDailyBonusCount(response.data.data[0]));

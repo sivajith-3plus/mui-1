@@ -50,10 +50,17 @@ export default function NavBar() {
     </Menu>
   );
 
-  
-
   return (
-    <Box sx={{ flexGrow: 1}}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        position: "fixed",
+        width: "calc(100% - 300px)",
+        justifyContent: "end",
+        right:0,
+        zIndex:1
+      }}
+    >
       <AppBar position="static" sx={{ bgcolor: "#1e1e1e" }}>
         <Toolbar>
           <Typography
