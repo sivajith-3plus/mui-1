@@ -66,7 +66,7 @@ const DailySpinBonusTypeTable = () => {
           fontWeight="fontWeightBold"
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <div>Daily Spin Bonus Type</div>
+          <span>Daily Spin Bonus Type</span>
           <Button variant="contained" onClick={handleAdd}>
             add
           </Button>

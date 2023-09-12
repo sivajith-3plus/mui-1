@@ -18,6 +18,9 @@ const api = {
   },
   getAllDaySpinBonus:async () => {
     return await axios.get('/bonus/get-all-day-spin-bonuses');
+  },
+  updateDaySpinBonus:async(id,data)=>{
+    return await axios.put(`/bonus/update-day-spin-bonus/${id}`,data)
   }
 };
 

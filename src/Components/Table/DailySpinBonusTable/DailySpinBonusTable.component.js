@@ -9,7 +9,9 @@ import Paper from "@mui/material/Paper";
 import data from "./dailyBonusData";
 import { Box, List, ListItem, Modal, Typography } from "@mui/material";
 import EditDailySpinWheel from "../../Model/EditDailySpinWheel.component";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setDailyBonus } from "../../../Redux/features/DailySpinBonus/dailySpinBonusSlice";
+import api from "../../../Api";
 
 const modelStyle = {
   position: "absolute",
@@ -31,7 +33,15 @@ export default function DailySpinBonusTable() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const dispatch = useDispatch();
+
   const dailyBonusData = useSelector((state) => state.dailySpinBonus.data);
+
+  React.useEffect(() => {
+    api.getAllDaySpinBonus().then((response) => {
+      dispatch(setDailyBonus(response.data));
+    });
+  }, [open]);
 
   console.log("bonus data", dailyBonusData);
 
@@ -62,8 +72,13 @@ export default function DailySpinBonusTable() {
                 <List sx={{ listStyleType: "disc", pl: 4 }}>
                   {obj.division.map((div, j) => (
                     <ListItem key={j} sx={{ display: "list-item" }}>
-                      division {j + 1} {div.divisionName}: {div.cash? div.cash+'rs' : div.referalBooster+'x'} , Deduct
-                      TDS: {div.dedcutTds}
+                      Division {j + 1} {div.divisionName}:{" "}
+                      {div.cash
+                        ? div.cash + "rs"
+                        : div.referalBooster
+                        ? div.referalBooster + "x"
+                        : ""}
+                      , Deduct TDS: {div.dedcutTds}
                     </ListItem>
                   ))}
                 </List>
@@ -89,7 +104,7 @@ export default function DailySpinBonusTable() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modelStyle}>
-          <EditDailySpinWheel dayToEdit={dayToEdit}/>
+          <EditDailySpinWheel dayToEdit={dayToEdit} handleClose={handleClose} />
         </Box>
       </Modal>
     </TableContainer>
