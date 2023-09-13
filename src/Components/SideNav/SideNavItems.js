@@ -12,6 +12,11 @@ import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 
 const sideNavItems = [
   {
+    name: "Admin Users",
+    route:'admin-users',
+    icon: <GroupIcon />,
+  },
+  {
     name: "Users",
     icon: <GroupIcon />,
     children: [],

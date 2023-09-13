@@ -2,15 +2,15 @@ import {
   Box,
   Button,
   FormControlLabel,
-  MenuItem,
   Radio,
   RadioGroup,
-  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import api from "../../Api";
+import { setDailyBonusType } from "../../Redux/features/DailyBonusType/dailyBonusTypeSlice";
+import { useDispatch } from "react-redux";
 
 const AddDailySpinBonusType = ({handleClose}) => {
   const [iconUrl, setIconUrl] = useState("");
@@ -19,6 +19,7 @@ const AddDailySpinBonusType = ({handleClose}) => {
   const [description, setDescription] = useState("");
   const [deductTds, setDeductTds] = useState();
   const [error,setError] = useState()
+  const dispatch = useDispatch()
 
   const handleSubmit = () => {
     if(!iconUrl || !type || !title || !description || !deductTds){
@@ -33,6 +34,9 @@ const AddDailySpinBonusType = ({handleClose}) => {
         deductTds:deductTds
       }
       api.addBonusType(data)
+      api.getAllBonusType().then((response) => {
+        dispatch(setDailyBonusType(response.data));
+      });
       handleClose()
     }
   }

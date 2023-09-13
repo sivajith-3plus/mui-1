@@ -9,6 +9,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./Components/Home/Home";
 import DailyBonus from "./Components/DailyBonus/DailyBonus.page";
 import axios from "axios";
+import AdminUsers from "./pages/admin-users/AdminUsers";
 
 // axios settings
 axios.defaults.baseURL = "http://localhost:5000";
@@ -23,6 +24,7 @@ function App() {
         <Box sx={{ width: 1, position:"absolute", top: 64, right: 0,  width:'calc(100% - 300px)',zIndex:0}}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/admin-users" element={<AdminUsers />} />
             <Route path="/daily-spin-bonus" element={<DailyBonus />} />
           </Routes>
         </Box>

@@ -1,25 +1,34 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
+import { useLocation } from "react-router-dom";
 
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [title, setTitle] = React.useState("Admin");
+  const location = useLocation();
 
   const isMenuOpen = Boolean(anchorEl);
+
+  React.useEffect(() => {
+    const pathname = location.pathname;
+    let newTitle = "Admin"; // Default title
+
+    if (pathname === "/daily-spin-bonus") {
+      newTitle = "Daily Spin Bonus";
+    } else if (pathname === "/admin-users") {
+      newTitle = "Admin Users";
+    }
+
+    setTitle(newTitle);
+  }, [location.pathname]);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -57,8 +66,8 @@ export default function NavBar() {
         position: "fixed",
         width: "calc(100% - 300px)",
         justifyContent: "end",
-        right:0,
-        zIndex:1
+        right: 0,
+        zIndex: 1,
       }}
     >
       <AppBar position="static" sx={{ bgcolor: "#1e1e1e" }}>
@@ -69,7 +78,7 @@ export default function NavBar() {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            Daily Spin Bonus
+            {title}
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />

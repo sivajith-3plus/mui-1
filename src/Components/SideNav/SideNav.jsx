@@ -34,10 +34,11 @@ const scrollbarStyle = {
 
 const SideNav = () => {
   const navigate = useNavigate();
+
   const handleRoute = (props) => {
     navigate(props.route);
   };
-  const classes = useStyles();
+
   return (
     <>
       <Stack
@@ -75,7 +76,8 @@ const SideNav = () => {
                     }
                     aria-controls="panel1a-content"
                     id="panel1a-header"
-                  >
+                    onClick={() => !item.children && handleRoute(item)}
+                    >
                     <Typography>{item.name}</Typography>
                   </AccordionSummary>
                   {item.children && (
