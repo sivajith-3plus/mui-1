@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import data from "./DailySpinBonusTypeTableData";
+// import data from "./DailySpinBonusTypeTableData";
 import EditDailySpinBonusType from "../../Model/EditDailySpinBonusType";
 import api from "../../../Api";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +33,7 @@ const modelStyle = {
 };
 
 const DailySpinBonusTypeTable = () => {
-  const dailyBonusCount = useSelector((state) => state.dailyBonusCount.data);
+  // const dailyBonusCount = useSelector((state) => state.dailyBonusCount.data);
 
   const [open, setOpen] = React.useState(false);
   const [isAdd, setIsAdd] = useState(false);
@@ -56,17 +56,17 @@ const DailySpinBonusTypeTable = () => {
     api.getAllBonusType().then((response) => {
       dispatch(setDailyBonusType(response.data));
     });
-  }, [open]);
+  }, [open, dispatch]);
 
   return (
     <>
       <TableContainer sx={{}}>
-        <Typography
+        <Typography 
           variant="h6"
           fontWeight="fontWeightBold"
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <span>Daily Spin Bonus Type</span>
+          <Typography>Daily Spin Bonus Type</Typography>
           <Button variant="contained" onClick={handleAdd}>
             add
           </Button>
@@ -109,7 +109,7 @@ const DailySpinBonusTypeTable = () => {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  <div
+                  <Box
                     style={{
                       display: "flex",
                       alignItems: "end",
@@ -123,12 +123,12 @@ const DailySpinBonusTypeTable = () => {
                     >
                       {obj.description}
                     </Typography>
-                    <span style={{ color: "blue" }}>more</span>
-                  </div>
+                    <Typography style={{ color: "blue" }}>more</Typography>
+                  </Box>
                 </TableCell>
                 <TableCell align="left">{obj.deductTds}</TableCell>
                 <TableCell align="right">
-                  <span
+                  <Typography
                     style={{ color: "blue", cursor: "pointer" }}
                     onClick={() => {
                       setEditEle(obj);
@@ -137,7 +137,7 @@ const DailySpinBonusTypeTable = () => {
                     }}
                   >
                     edit
-                  </span>
+                  </Typography>
                 </TableCell>
               </TableRow>
             ))}

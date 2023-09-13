@@ -10,7 +10,6 @@ export const dailyBonusSlice = createSlice({
   reducers: {
     setDailyBonus: (state, action) => {
         state.data = action.payload;
-        console.log('entered',state.data);
     },
   },
 });

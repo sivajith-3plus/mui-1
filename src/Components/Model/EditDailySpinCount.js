@@ -4,17 +4,30 @@ import api from "../../Api";
 import { useDispatch, useSelector } from "react-redux";
 import { setDailyBonusCount } from "../../Redux/features/DailyBonusCount/dailyBonusCountSlice";
 
-const EditDailySpinCount = () => {
+const EditDailySpinCount = ({ handleClose }) => {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
   const dailyBonusCount = useSelector((state) => state.dailyBonusCount.data);
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    api.editBonusCount(dailyBonusCount._id,value).then((response)=>{
-        dispatch(setDailyBonusCount(response.data))
-    })
-  }
+    if (dailyBonusCount.count < parseFloat(value)) {
+      for (let i = dailyBonusCount.count; i < value; i++) {
+        let newDiv = {
+          divisionName: "",
+        };
+        api.addOneDivionToAll(newDiv);
+      }
+    }else{
+      for (let i = value ; i < dailyBonusCount.count; i++) {
+        api.removeOneDivisionToAll();
+      }
+    }
+    api.editBonusCount(dailyBonusCount._id, value).then((response) => {
+      dispatch(setDailyBonusCount(response.data));
+    });
+    handleClose();
+  };
 
   const handleChange = (event) => {
     const inputValue = event.target.value;
@@ -25,24 +38,23 @@ const EditDailySpinCount = () => {
     setError(!isValid);
   };
   return (
-    <div>
-      <Box sx={{ color: "black", width:'100%'}}>
+    <>
+      <Box sx={{ color: "black", width: "100%" }}>
         <Typography align="center" variant="h6">
           Update Daily Spin Bonus
         </Typography>
-        <p>Division Count *</p>
-        <div>
-
-        <TextField
-          label="Enter a number between 4 and 10"
-          variant="outlined"
-          error={error}
-          helperText={error ? "Invalid number" : ""}
-          value={value}
-          onChange={handleChange}
-          sx={{width:'60%',marginBottom:4}}
+        <Typography>Division Count *</Typography>
+        <Box>
+          <TextField
+            label="Enter a number between 4 and 10"
+            variant="outlined"
+            error={error}
+            helperText={error ? "Invalid number" : ""}
+            value={value}
+            onChange={handleChange}
+            sx={{ width: "60%", marginBottom: 4 }}
           />
-          </div>
+        </Box>
         <Button
           variant="contained"
           color="primary"
@@ -52,7 +64,7 @@ const EditDailySpinCount = () => {
           Submit
         </Button>
       </Box>
-    </div>
+    </>
   );
 };
 

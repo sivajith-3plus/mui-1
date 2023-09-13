@@ -101,7 +101,7 @@ const DailySpinBonusConfig = () => {
               aria-describedby="modal-modal-description"
             >
               <Box sx={modelStyle}>
-                <EditDailySpinCount />
+                <EditDailySpinCount  handleClose={handleClose}/>
               </Box>
             </Modal>
           </TableContainer>

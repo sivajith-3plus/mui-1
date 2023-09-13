@@ -5,9 +5,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import data from "./dailyBonusData";
-import { Box, List, ListItem, Modal, Typography } from "@mui/material";
+// import data from "./dailyBonusData";
+import { Box, List, ListItem, Modal } from "@mui/material";
 import EditDailySpinWheel from "../../Model/EditDailySpinWheel.component";
 import { useDispatch, useSelector } from "react-redux";
 import { setDailyBonus } from "../../../Redux/features/DailySpinBonus/dailySpinBonusSlice";
@@ -41,7 +40,7 @@ export default function DailySpinBonusTable() {
     api.getAllDaySpinBonus().then((response) => {
       dispatch(setDailyBonus(response.data));
     });
-  }, [open]);
+  }, [open, dispatch]);
 
   console.log("bonus data", dailyBonusData);
 
@@ -72,13 +71,16 @@ export default function DailySpinBonusTable() {
                 <List sx={{ listStyleType: "disc", pl: 4 }}>
                   {obj.division.map((div, j) => (
                     <ListItem key={j} sx={{ display: "list-item" }}>
-                      Division {j + 1} {div.divisionName}:{" "}
+                      Division {j + 1} {div.divisionName}
                       {div.cash
-                        ? div.cash + "rs"
+                        ? ":" + div.cash + "rs"
                         : div.referalBooster
-                        ? div.referalBooster + "x"
+                        ? ":" + div.referalBooster + "x"
                         : ""}
-                      , Deduct TDS: {div.dedcutTds}
+                      {" "}
+                      {div.divisionName !== "Hard Luck" && div.divisionName !== "" && (
+                        <>, Deduct TDS: {div.dedcutTds}</>
+                      )}
                     </ListItem>
                   ))}
                 </List>

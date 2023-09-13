@@ -21,6 +21,12 @@ const api = {
   },
   updateDaySpinBonus:async(id,data)=>{
     return await axios.put(`/bonus/update-day-spin-bonus/${id}`,data)
+  },
+  addOneDivionToAll:async(data)=>{
+    return await axios.post(`bonus/addDivisionToAll`,data)
+  },
+  removeOneDivisionToAll:async()=>{
+    return await axios.post(`bonus/popLastDivisionFromAll`)
   }
 };
 

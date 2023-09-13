@@ -1,5 +1,4 @@
 import {
-  Autocomplete,
   Box,
   Button,
   MenuItem,
@@ -15,12 +14,12 @@ import { setDailyBonus } from "../../Redux/features/DailySpinBonus/dailySpinBonu
 
 const EditDailySpinWheel = ({ dayToEdit, handleClose }) => {
   const updatedDayToEdit = { ...dayToEdit };
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const dailyBonusCount = useSelector((state) => state.dailyBonusCount.data);
   const dailyBonusType = useSelector((state) => state.dailyBonusType.data);
 
-  const [dayName, setDayName] = useState(dayToEdit.dayName);
+  // const [dayName, setDayName] = useState(dayToEdit.dayName);
   const [title, setTitle] = useState(dayToEdit.title);
   const [description, setDescription] = useState(dayToEdit.description);
   const [divisions, setDivisions] = useState(dayToEdit.division);
@@ -44,9 +43,10 @@ const EditDailySpinWheel = ({ dayToEdit, handleClose }) => {
         updatedDivisions.forEach((div) => {
           if (div.id === i) {
             div.divisionName = e.target.value;
-            if(e.target.value=='Hard Luck'){
-              div.cash=null
-              div.dedcutTds="no"
+            if (e.target.value == "Hard Luck") {
+              div.cash = null;
+              div.referalBooster = null;
+              div.dedcutTds = "No";
             }
           }
         });
@@ -141,13 +141,34 @@ const EditDailySpinWheel = ({ dayToEdit, handleClose }) => {
     });
 
     console.log(updatedDayToEdit);
-    handleClose()
+    handleClose();
   };
-  
+
   const divReps = [];
   for (let i = 1; i <= dailyBonusCount.count; i++) {
     divReps.push(i);
   }
+
+  useEffect(() => {
+    if (divisions.length < divReps.length) {
+      const newDivisions = [...divisions];
+  
+      for (let i = divisions.length; i < divReps.length; i++) {
+        newDivisions.push({
+          divisionName: 'Hard Luck',
+          cash: null,
+          referalBooster: null,
+          dedcutTds: null,
+          _id: null,
+        });
+      }
+  
+      console.log('hi', newDivisions);
+  
+      setDivisions(newDivisions);
+    }
+  }, []);
+  
 
   return (
     <>
@@ -205,7 +226,7 @@ const EditDailySpinWheel = ({ dayToEdit, handleClose }) => {
                     labelId={`division-label-${i}`}
                     id={`division-select-${i}`}
                     label="day"
-                    value={divisions[i].divisionName}
+                    value={divisions[i].divisionName || ''}
                     onChange={(e) => {
                       handleTypeChange(e, i);
                     }}
@@ -233,6 +254,7 @@ const EditDailySpinWheel = ({ dayToEdit, handleClose }) => {
                         sx={{ width: "100%" }}
                         variant="outlined"
                         inputProps={{ maxLength: 100 }}
+                        // value={divisions[i].cash}
                         onChange={(e) => handleCashChange(e, i)}
                       />
                     </Box>
@@ -253,7 +275,7 @@ const EditDailySpinWheel = ({ dayToEdit, handleClose }) => {
                         labelId={`referral-label-${i}`}
                         id={`referral-select-${i}`}
                         label="day"
-                        value={divisions[i].referalBooster}
+                        value={divisions[i].referalBooster || ''}
                         onChange={(e) => handleReferalChange(e, i)}
                       >
                         <MenuItem value="undefined" hidden></MenuItem>
@@ -275,7 +297,7 @@ const EditDailySpinWheel = ({ dayToEdit, handleClose }) => {
                         labelId={`expires-label-${i}`}
                         id={`expires-select-${i}`}
                         label="day"
-                        value={divisions[i].time}
+                        value={divisions[i].time || ''}
                         onChange={(e) => handleTimeChange(e, i)}
                       >
                         <MenuItem value="undefined" hidden></MenuItem>
