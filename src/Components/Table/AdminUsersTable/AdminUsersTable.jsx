@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import data from "./AdminUsersData";
-import AdminUsers from "../../Model/AdminUsers/adminUsers.model";
+import AdminUsersModel from "../../Model/AdminUsers/adminUsers.model";
 
 const modelStyle = {
   position: "absolute",
@@ -151,7 +151,7 @@ const AdminUsersTable = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modelStyle}>
-          <AdminUsers handleClose={handleClose} isAdd={isAdd}/>
+          <AdminUsersModel handleClose={handleClose} isAdd={isAdd}/>
         </Box>
       </Modal>
     </>
