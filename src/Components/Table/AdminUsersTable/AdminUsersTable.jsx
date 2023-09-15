@@ -13,9 +13,11 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
-import data from "./AdminUsersData";
+import React, { useEffect } from "react";
 import AdminUsersModel from "../../Model/AdminUsers/adminUsers.model";
+import { useDispatch, useSelector } from "react-redux";
+import api from "../../../Api";
+import { setAdminUsers } from "../../../Redux/features/AdminUsers/adminUsersSlice";
 
 const modelStyle = {
   position: "absolute",
@@ -30,6 +32,10 @@ const modelStyle = {
 };
 
 const AdminUsersTable = () => {
+  const data = useSelector((state)=>state.adminUsers.data)
+  const dispatch = useDispatch()
+
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -54,6 +60,13 @@ const AdminUsersTable = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  
+  useEffect(()=>{
+    api.getAllAdminUsers().then((response)=>{
+      dispatch(setAdminUsers(response.data))
+    })
+  },[open])
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);

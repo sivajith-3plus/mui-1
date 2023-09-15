@@ -1,16 +1,16 @@
 const data = [
 
   {
-    title: "Users",
+    name: "Users",
   },
   {
-    title: "Game",
+    name: "Game",
   },
   {
-    title: "Analytics",
+    name: "Analytics",
   },
   {
-    title: "Popular Game",
+    name: "Popular Game",
   },
 ];
 

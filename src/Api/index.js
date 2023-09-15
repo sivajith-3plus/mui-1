@@ -27,7 +27,16 @@ const api = {
   },
   removeOneDivisionToAll:async()=>{
     return await axios.post(`bonus/popLastDivisionFromAll`)
-  }
+  },
+  getAllAdminUsers: async ()=>{
+    return await axios.get('/adminUsers/get-admin-users')
+  },
+  addAdminUsers: async(data)=>{
+    return await axios.post(`adminUsers/add-admin-users`,data)
+  },
+  getAdminUserRoles:async ()=>{
+    return await axios.get('/adminUserRoles/get-admin-roles')
+  },
 };
 
 export default api;
